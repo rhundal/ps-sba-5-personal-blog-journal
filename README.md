@@ -1,5 +1,25 @@
 ## Reflections
 
+### A brief description of your project.
+
+- This is a mini blog / journal where I (user) can perform CRUD operations for object postit
+- User can add a new post using the button on top right
+- User can perform Update and Delete operations clicking on buttons inside the postit
+- User can view a postit by clicking on it in the list which is maintained dynamically
+
+### Instructions on how to run the application (if anything beyond opening index.html in a browser is needed).
+
+- Launch index.html in a browser
+
+### A reflection on your development process, challenges faced, and how you overcame them.
+
+- I spent alot of time designing the application although i know the instructions said not to. I wanted to play around with different styles and practice tailwind as well.
+- I decided to simplify my ui design mid way to keep it simple for the user
+
+### Any known issues or features not implemented.
+
+- I would like to implement search feature if i had more time
+
 ## Assignment
 
 ### Create New Posts:
