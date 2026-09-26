@@ -27,23 +27,33 @@
             class="border-3 border-[#d4a4a5] flex h-90 w-100 md:w-200 md:h-screen rounded-xl shadow-2xl bg-rose-50/50 justify-center">
             <div class="flex flex-col md:flex-row justify-center items-center m-5 w-100 md:m-50">
                 <form id="postCreationForm"
-                    class="flex flex-col md:flex-row bg-transparent border-2 border-[#d4a4a5] rounded-xl shadow-xl h-200 md:w-200 md:h-100"
+                    class="bg-transparent border-2 border-[#d4a4a5] rounded-xl shadow-xl h-80 scale-90 md:scale-100 md:w-200 md:h-100"
                     novalidate>
-                    <div id=" form-group" class="m-10">
+                    <div id="form-group" class="m-5 md:m-10">
                         <div class="bg-[#fadadd] border-1 border-[#e8d7d8]">
                             <label for=" title" class="text-lg font-semibold text-[#d4a4a5]"> Your Title: </label>
                             <input type="text" id="title" name="title"
                                 class="border-2 border-[#d4a4a5] rounded-md ml-5">
                             <span class="font-semibold mt-2" id=" titleError"></span>
                         </div>
-                        <div class="bg-[#fadadd] border-1 border-[#e8d7d8] mt-5">
+                        <div class="bg-[#fadadd] border-1 border-[#e8d7d8] md:mt-5">
                             <label for="contentArea" class="text-lg font-semibold text-[#d4a4a5]"> Write your
                                 article:
                             </label>
                             <textarea id="contentArea" name="contentArea" rows="6"
                                 placeholder="Write your article here..."
-                                class="border-2 border-[#d4a4a5] rounded-md ml-5 mt-5 w-70" required></textarea>
+                                class="border-2 border-[#d4a4a5] rounded-md ml-5 md:mt-5 w-70" required></textarea>
                             <span class="font-semibold mt-2" id=" titleError"></span>
+                        </div>
+                        <div class="bg-[#fadadd] border-1 border-[#e8d7d8] md:mt-3">
+                            <label for="contentArea" class="text-lg font-semibold text-[#d4a4a5]"> Date:
+                            </label>
+                            <input type="date" id="taskDueDate" value="2026-09-30" min="2026-09-18" max="2027-12-31"
+                                class="border-3 border-[#d4a4a5] ml-5 rounded-lg" />
+                        </div>
+                        <div class=" mt-5 m-5">
+                            <button class="font-semibold text-[#d4a4a5] bg-[#be123c] w-70"> Post
+                            </button>
                         </div>
                     </div>
                 </form>
