@@ -61,97 +61,40 @@ function renderPostIts(postsArray) {
   postsArray.forEach((post) => {
     let postItUI = document.createElement("div");
     postItUI.classList.add(
-      "flex",
-      "flex-col",
-      "md:flex-row",
-      "items-start",
-      "m-5",
-      "bg-[#F7E7A9]",
-      "border-2",
-      "border-[#d4a4a5]",
-      "w-[300px]",
-      "h-[100px]",
-      "md:h-[150px]",
-      "md:w-[600px]",
-      "shadow-2xl",
-      "rounded-2xl",
-      "mx-auto",
+      "w-full",
       "mb-10",
-    );
-
-    let titleOfPost = document.createElement("div");
-    titleOfPost.classList.add(
-      "border-2",
-      "border-[#d4a4a5]",
-      "rounded-md",
-      "ml-5",
-      "text-[#d4a4a5]",
-    );
-    titleOfPost.innerText = post.title;
-    postItUI.appendChild(titleOfPost);
-
-    let dateOfPost = document.createElement("div");
-    dateOfPost.classList.add(
+      "mt-5",
       "flex",
-      "items-center",
+      "mx-auto",
       "justify-center",
-      "text-center",
-      "text-md",
-      "text-[#d4a4a5]",
-      "bg-[#F7E7A9]",
-      "border-2",
-      "border-[#d4a4a5]",
-      "w-[100px]",
-      "h-[50px]",
-      "md:h-[150px]",
-      "md:w-[100px]",
-      "shadow-2xl",
-      "rounded-2xl",
-      "mx-auto",
-      "mb-10",
-    );
-    dateOfPost.textContent = post.date;
-
-    postItUI.appendChild(dateOfPost);
-
-    let contentTextArea = document.createElement("div");
-    contentTextArea.classList.add("text-[#d4a4a5]");
-    contentTextArea.textContent = post.content;
-    postItUI.appendChild(contentTextArea);
-
-    let deleteBtn = document.createElement("button");
-    deleteBtn.innerText = "Delete";
-    deleteBtn.classList.add(
-      "bg-[#FAF7F5]",
-      "text-[#d4a4a5]",
-      "font-bold",
-      "w-5",
-      "h-3",
-      "mt-4",
-      "ml-5",
-      "rounded-lg",
-      "shadow-xl",
     );
 
-    deleteBtn.addEventListener("click", deletePost);
-    postItUI.appendChild(deleteBtn);
+    postItUI.innerHTML = `
+        <div class="bg-[#F7E7A9] border-2 border-[#d4a4a5] w-[300px] min-h-[120px] md:w-[600px] md:min-h-[220px] shadow-2xl rounded-2xl p-5 flex flex-col justify-between">
 
-    let editBtn = document.createElement("button");
-    editBtn.innerText = "Edit";
-    editBtn.classList.add(
-      "flex",
-      "bg-[#F7E7A9]",
-      "text-[#d4a4a5]",
-      "font-bold",
-      "w-10",
-      "h-5",
-      "mt-4",
-      "ml-5",
-      "rounded-lg",
-      "shadow-xl",
-    );
-    // editBtn.addEventListener("click", editPost());
-    // postItUI.appendChild(editBtn);
+            <!-- Top Header Grid -->
+            <div class="grid grid-rows-3 md:grid-cols-3 -mt-[10px]">
+                <div class="flex justify-start items-center mb-3">
+                    <h2 class="text-sm md:text-xl font-bold text-[#d4a4a5]">${post.title}</h2>
+                </div>
+                <div class="flex ml-10 items-center gap-5 scale-90 md:scale-100">
+                    <button id="editBtn" class="inline-block bg-[#d4a4a5] text-[#F7E7A9] font-medium text-xs px-3 rounded-lg shadow-sm mr-2">
+                        Edit
+                    </button>
+                    <button id="deleteBtn" class="inline-block bg-[#d4a4a5] text-[#F7E7A9] font-medium text-xs px-3 rounded-lg shadow-sm mr-2">
+                        Delete
+                    </button>
+                  <!--  <button id="expandBtn" class="inline-block bg-[#d4a4a5] text-[#F7E7A9] font-medium text-xs px-3 rounded-lg shadow-sm mr-2">
+                        Expand
+                    </button> -->
+                </div>
+                <div class="flex md:justify-end md:ml-20 items-center mb-3 mt-3">
+                    <div class="text-sm md:text-lg md:ml-[15px] font-bold text-[#d4a4a5]">${post.date}</div>
+                </div>
+            </div>
+            <div class="hidden md:block text-lg text-[#d4a4a5] break-words flex-grow max-h-[120px] overflow-y-auto -mt-[100px]"> ${post.content} </div>
+        </div>
+    `;
     postHereArea.appendChild(postItUI);
   });
 }
@@ -193,7 +136,7 @@ postBtn.addEventListener("click", function (e) {
   let newPostIt = {
     id: postitArray.length + 1,
     title: titleHandle.value,
-    contentArea: textAreaHandle.value,
+    content: textAreaHandle.value,
     date: new Date(date.value + "T00:00:00").toLocaleDateString(),
   };
 
