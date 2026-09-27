@@ -41,7 +41,7 @@ Pending - form validation
 All created posts should be displayed on the page. Each displayed post should clearly show its title and content.
 Posts should be rendered dynamically using JavaScript.
 
-### Edit Posts:
+### Edit Posts: [Done]
 
 Each displayed post should have an “Edit” button.
 Clicking “Edit” should allow the user to modify the title and content of that specific post. This might involve populating the main form (or a modal form) with the existing post data.
@@ -58,3 +58,5 @@ Clicking “Delete” should remove the post from the display and from localStor
 All blog posts (title, content, and perhaps a unique ID and timestamp you generate) must be saved in localStorage.
 When the page is loaded or refreshed, any posts previously saved in localStorage should be retrieved and displayed.
 Updates (from edits) and deletions must also be reflected in localStorage.
+
+### Field Validation

@@ -202,14 +202,21 @@ function renderPostIts(postsArray) {
       //   editPopUpContainer.classList.add("hidden");
     });
 
+    const delBtn = postItUI.querySelector("#deleteBtn");
+    delBtn.addEventListener("click", function () {
+      deletePost(post);
+    });
+
     editPopUpContainer.appendChild(editPopUp);
     postItUI.appendChild(editPopUpContainer);
     postHereArea.appendChild(postItUI);
   });
 }
 
-function deletePost(e) {
-  console.log("deleting post");
+function deletePost(deletePost) {
+  console.log(deletePost);
+  postitArray = postitArray.filter((item) => item.id !== deletePost.id);
+  renderPostIts(postitArray);
 }
 
 function postitFormVisibility(e) {
