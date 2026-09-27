@@ -15,6 +15,7 @@
 
 - I spent alot of time designing the application although i know the instructions said not to. I wanted to play around with different styles and practice tailwind as well.
 - I decided to simplify my ui design mid way to keep it simple for the user
+- One of the challenges I faced is when creating a new post, it made both the postItPopUp and postArea disappear. I fixed it by removing the postHereArea div outside the postItPopUp div which made it appear properly.
 
 ### Any known issues or features not implemented.
 

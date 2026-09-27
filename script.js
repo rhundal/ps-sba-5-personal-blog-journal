@@ -37,9 +37,9 @@ let postIt = {
 
 let postitArray = [];
 
-const titleHandle = document.getElementById("title");
-const textAreaHandle = document.getElementById("contentArea");
-const dateField = document.getElementById("date");
+let titleHandle = document.getElementById("title");
+let textAreaHandle = document.getElementById("contentArea");
+let dateField = document.getElementById("date");
 const postBtn = document.getElementById("post");
 let displayAreaFiled = document.getElementById("displayArea");
 let postItPopupDiv = document.getElementById("postItPopUp");
@@ -50,12 +50,22 @@ const newEntryBtn = document.getElementById("newEntry");
 const titleErrorHandle = document.getElementById("titleError");
 const textAreaErrorHandle = document.getElementById("textAreaError");
 
-// functions ////
+// const postHereArea2 = displayAreaFiled
+//   .querySelector("#postItPopUp")
+//   .querySelector("#postHere");
 
+// functions ////
 function renderPostIts(postsArray) {
+  postHereArea.innerHTML = "";
+
   postsArray.forEach((post) => {
     let postItUI = document.createElement("div");
     postItUI.classList.add(
+      "flex",
+      "flex-col",
+      "md:flex-row",
+      "items-start",
+      "m-5",
       "bg-[#F7E7A9]",
       "border-2",
       "border-[#d4a4a5]",
@@ -68,7 +78,6 @@ function renderPostIts(postsArray) {
       "mx-auto",
       "mb-10",
     );
-    // forgot title and date
 
     let titleOfPost = document.createElement("div");
     titleOfPost.classList.add(
@@ -79,30 +88,58 @@ function renderPostIts(postsArray) {
       "text-[#d4a4a5]",
     );
     titleOfPost.innerText = post.title;
+    postItUI.appendChild(titleOfPost);
 
-    //let dateOfPost = post.date;
+    let dateOfPost = document.createElement("div");
+    dateOfPost.classList.add(
+      "flex",
+      "items-center",
+      "justify-center",
+      "text-center",
+      "text-md",
+      "text-[#d4a4a5]",
+      "bg-[#F7E7A9]",
+      "border-2",
+      "border-[#d4a4a5]",
+      "w-[100px]",
+      "h-[50px]",
+      "md:h-[150px]",
+      "md:w-[100px]",
+      "shadow-2xl",
+      "rounded-2xl",
+      "mx-auto",
+      "mb-10",
+    );
+    dateOfPost.textContent = post.date;
+
+    postItUI.appendChild(dateOfPost);
 
     let contentTextArea = document.createElement("div");
     contentTextArea.classList.add("text-[#d4a4a5]");
     contentTextArea.textContent = post.content;
     postItUI.appendChild(contentTextArea);
+
     let deleteBtn = document.createElement("button");
     deleteBtn.innerText = "Delete";
     deleteBtn.classList.add(
-      "bg-[#F7E7A9]",
+      "bg-[#FAF7F5]",
       "text-[#d4a4a5]",
       "font-bold",
-      "w-10",
-      "h-5",
+      "w-5",
+      "h-3",
       "mt-4",
       "ml-5",
       "rounded-lg",
       "shadow-xl",
     );
+
     deleteBtn.addEventListener("click", deletePost);
+    postItUI.appendChild(deleteBtn);
+
     let editBtn = document.createElement("button");
     editBtn.innerText = "Edit";
     editBtn.classList.add(
+      "flex",
       "bg-[#F7E7A9]",
       "text-[#d4a4a5]",
       "font-bold",
@@ -113,9 +150,8 @@ function renderPostIts(postsArray) {
       "rounded-lg",
       "shadow-xl",
     );
-    editBtn.addEventListener("click", editPost(e));
-    postItUI.appendChild(deleteBtn);
-    postItUI.appendChild(editBtn);
+    // editBtn.addEventListener("click", editPost());
+    // postItUI.appendChild(editBtn);
     postHereArea.appendChild(postItUI);
   });
 }
@@ -124,25 +160,49 @@ function deletePost(e) {
   console.log("deleting post");
 }
 
+function editPost(e) {
+  console.log("editing post");
+}
+
 function postitFormVisibility(e) {
   if (e.target === newEntryBtn && postItPopupDiv.classList.contains("hidden")) {
     postItPopupDiv.classList.remove("hidden");
     postItPopupDiv.classList.add("inline-block");
+    postHereArea.classList.remove("inline-block");
+    postHereArea.classList.add("hidden");
   } else if (
     e.target === postBtn &&
     postItPopupDiv.classList.contains("inline-block")
   ) {
     postItPopupDiv.classList.remove("inline-block");
     postItPopupDiv.classList.add("hidden");
+    postHereArea.classList.remove("hidden");
+    postHereArea.classList.add("inline-block");
   }
+
+  console.log("postItPopDiv Visibility " + postItPopupDiv.checkVisibility());
 }
 
 // Event Listeners /////
 
 postBtn.addEventListener("click", function (e) {
   e.preventDefault();
+
+  // create a new postIt object based on user input
+
+  let newPostIt = {
+    id: postitArray.length + 1,
+    title: titleHandle.value,
+    contentArea: textAreaHandle.value,
+    date: new Date(date.value + "T00:00:00").toLocaleDateString(),
+  };
+
+  postitArray.push(newPostIt); // add newly created postIt object to postItArray
+  renderPostIts(postitArray); // pass postItArray to render Function
   postitFormVisibility(e);
-  console.log("clicked");
+  titleHandle.value = "";
+  textAreaHandle.value = "";
+  date.value = "";
 });
 
 newEntryBtn.addEventListener("click", function (e) {
