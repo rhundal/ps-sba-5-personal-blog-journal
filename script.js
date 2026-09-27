@@ -95,16 +95,121 @@ function renderPostIts(postsArray) {
             <div class="hidden md:block text-lg text-[#d4a4a5] break-words flex-grow max-h-[120px] overflow-y-auto -mt-[100px]"> ${post.content} </div>
         </div>
     `;
+
+    const editBtn = postItUI.querySelector("#editBtn");
+
+    let editPopUpContainer = document.createElement("div");
+    editPopUpContainer.classList.add(
+      "fixed",
+      "inset-0",
+      "z-50",
+      "flex",
+      "top-0", // Explicitly forces container to snap to top edge
+      "left-0",
+      "items-center",
+      "justify-center",
+      "bg-transparent",
+      "hidden",
+      "w-screen", // Forces width to match 100% of screen viewport
+      "h-screen",
+    );
+
+    let editPopUp = document.createElement("div");
+    editPopUp.classList.add(
+      "bg-transparent",
+      "flex",
+      "flex-col",
+      "md:flex-row",
+      "justify-center",
+      "items-center",
+      "border-2",
+      "border-[#6b7280]",
+      "rounded-xl",
+      "shadow-xl",
+      "md:w-[600px]",
+      "md:h-[500px]",
+      "w-[300px]",
+      "h-[300px]",
+      "m-5",
+    );
+
+    editPopUp.innerHTML = `
+      
+          <div class="flex flex-col md:flex-row m-5 m-10" id="editPopUp">
+                <form id="editForm"
+                    class="bg-transparent border-2 border-[#d4a4a5] rounded-xl shadow-xl h-80 scale-90 md:scale-100 md:w-100 md:h-100"
+                    novalidate>
+                    <div id="form-group" class="m-5 md:m-10">
+                        <div class="bg-[#fadadd] border-1 border-[#e8d7d8]">
+                            <label for="editTitle" class="text-lg font-semibold text-[#d4a4a5]"> Edit Title: </label>
+                            <input type="text" id="editTitle" name="editTitle"
+                                class="border-2 border-[#d4a4a5] rounded-md ml-5" value="${post.title}">
+                            <span class="font-semibold mt-2" id="titlevalError"></span>
+                        </div>
+                        <div class="bg-[#fadadd] border-1 border-[#e8d7d8] md:mt-5">
+                            <label for="contentArea" class="text-lg font-semibold text-[#d4a4a5]"> Edit your
+                                article:
+                            </label>
+                            <textarea id="editcontentArea" name="editcontentArea" rows="6"
+                                class="border-2 border-[#d4a4a5] rounded-md ml-5 md:mt-5 w-70" required>${post.content}</textarea>
+                            <span class="font-semibold mt-2" id="edittextAreaError"></span>
+                        </div>
+                        <div class="bg-[#fadadd] border-1 border-[#e8d7d8] md:mt-3">
+                            <label for="editdate" class="text-lg font-semibold text-[#d4a4a5]"> Date:
+                            </label>
+                            <input type="date" id="editdate" min="2026-09-18" max="2027-12-31"
+                                class="border-3 border-[#d4a4a5] ml-5 rounded-lg" value="${new Date(post.date).toISOString().split("T")[0]}" />
+                        </div>
+                        <div class=" mt-5 m-5">
+                            <button id="editPostBtn"
+                                class="font-semibold text-[#d4a4a5] bg-[#be123c] w-70 rounded-lg shadow-xl"> Post It
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+      
+      `;
+
+    const editPstBtn = editPopUp.querySelector("#editPostBtn");
+
+    editBtn.addEventListener("click", function () {
+      if (editPopUpContainer.classList.contains("hidden")) {
+        editPopUpContainer.classList.remove("hidden");
+        editPopUpContainer.classList.add("flex");
+      } else {
+        editPopUpContainer.classList.remove("flex");
+        editPopUpContainer.classList.add("hidden");
+      }
+    });
+
+    let editedTitle = editPopUp.querySelector("#editTitle");
+    let editedContent = editPopUp.querySelector("#editcontentArea");
+    let editedDate = editPopUp.querySelector("#editdate");
+
+    editPstBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      post.title = editedTitle.value;
+      post.content = editedContent.value;
+      if (editedDate.value) {
+        post.date = new Date(
+          editedDate.value + "T00:00:00",
+        ).toLocaleDateString();
+      }
+      renderPostIts(postitArray); // pass postItArray to render Function
+
+      //   editPopUpContainer.classList.remove("flex");
+      //   editPopUpContainer.classList.add("hidden");
+    });
+
+    editPopUpContainer.appendChild(editPopUp);
+    postItUI.appendChild(editPopUpContainer);
     postHereArea.appendChild(postItUI);
   });
 }
 
 function deletePost(e) {
   console.log("deleting post");
-}
-
-function editPost(e) {
-  console.log("editing post");
 }
 
 function postitFormVisibility(e) {

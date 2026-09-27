@@ -17,6 +17,7 @@
 - I decided to simplify my ui design mid way to keep it simple for the user
 - One of the challenges I faced is when creating a new post, it made both the postItPopUp and postArea disappear. I fixed it by removing the postHereArea div outside the postItPopUp div which made it appear properly.
 - I struggled with styling the posts appear in the right place as well as their inner style. I had to do some googling to get some help with this styling part. I was able to do the JavaScript part myself. I still struggle with tailwind because sometimes I use conflicting classes together and that causes problems or UI not showing any changes.
+- Another new thing I looked up converting date.toLocalDateString() back to .toISOString() so browser can read it properly when reading it.
 
 ### Any known issues or features not implemented.
 
@@ -33,7 +34,9 @@ Upon submission, the new post should be added to a list of posts displayed on th
 The form should be validated: both title and content are required.
 Display custom, user-friendly error messages if validation fails.
 
-### Display Posts:
+Pending - form validation
+
+### Display Posts: [Done]
 
 All created posts should be displayed on the page. Each displayed post should clearly show its title and content.
 Posts should be rendered dynamically using JavaScript.
