@@ -23,6 +23,21 @@
 
 #### Bug - I have a bug in the application, after I close the browser, the application loads the saved posts from local stroage. But when I try to edit a post after returning to a page which was closed, update operation is not working. Something to do with local storage feature. Will come back to this [Pending]
 
+### Update on Bug - Bug fixed
+
+I was doing this instead of setting or updating the original array directly. I had to do some googling for looking at ideas. I used findIndex method on the array to find the index of the object based on the id I had available and I used it to update the original directly which fixed the bug. Now the update works both before and after the browser is closed and reloaded.
+
+````javascript
+       post.title = editedTitle.value;
+        post.content = editedContent.value;
+        if (editedDate.value) {
+          post.date = new Date(
+            editedDate.value + "T00:00:00",
+          ).toLocaleDateString();
+        }
+        ```
+
+
 - I would like to implement these features if i had more time:
   a. search
   b. expand postIt
@@ -67,3 +82,4 @@ Clicking “Delete” should remove the post from the display and from localStor
 - The form should be validated: both title and content are required.
 - Display custom, user-friendly error messages if validation fails.
 - Form validation should also apply during editing.
+````

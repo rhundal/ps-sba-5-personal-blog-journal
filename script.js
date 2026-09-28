@@ -191,17 +191,18 @@ function renderPostIts(postsArray) {
 
     editPstBtn.addEventListener("click", function (e) {
       e.preventDefault();
-      post.title = editedTitle.value;
-      post.content = editedContent.value;
+      let postItId = post.id;
+      let postItIndex = postitArray.findIndex((item) => item.id === postItId);
+
+      postitArray[postItIndex].title = editedTitle.value;
+      postitArray[postItIndex].content = editedContent.value;
       if (editedDate.value) {
-        post.date = new Date(
+        postitArray[postItIndex].date = new Date(
           editedDate.value + "T00:00:00",
         ).toLocaleDateString();
       }
+
       localStorage.setItem("savedPosts", JSON.stringify(postitArray));
-      console.log("what is in the storage after editing");
-      console.log(JSON.parse(localStorage.getItem("savedPosts")));
-      //   let updatedPosts = JSON.parse(localStorage.getItem("savedPosts"));
       renderPostIts(postitArray); // pass postItArray to render Function
     });
 
