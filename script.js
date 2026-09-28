@@ -35,7 +35,7 @@ let postIt = {
   date: new Date("2026-12-31"),
 };
 
-let postitArray = [];
+let postitArray = JSON.parse(localStorage.getItem("savedPosts")) || [];
 
 let titleHandle = document.getElementById("title");
 let textAreaHandle = document.getElementById("contentArea");
@@ -56,6 +56,8 @@ const textAreaErrorHandle = document.getElementById("textAreaError");
 
 // functions ////
 function renderPostIts(postsArray) {
+  //   localStorage.setItem("savedPosts", JSON.stringify(postitArray));
+
   postHereArea.innerHTML = "";
 
   postsArray.forEach((post) => {
@@ -196,10 +198,11 @@ function renderPostIts(postsArray) {
           editedDate.value + "T00:00:00",
         ).toLocaleDateString();
       }
+      localStorage.setItem("savedPosts", JSON.stringify(postitArray));
+      console.log("what is in the storage after editing");
+      console.log(JSON.parse(localStorage.getItem("savedPosts")));
+      //   let updatedPosts = JSON.parse(localStorage.getItem("savedPosts"));
       renderPostIts(postitArray); // pass postItArray to render Function
-
-      //   editPopUpContainer.classList.remove("flex");
-      //   editPopUpContainer.classList.add("hidden");
     });
 
     const delBtn = postItUI.querySelector("#deleteBtn");
@@ -214,8 +217,8 @@ function renderPostIts(postsArray) {
 }
 
 function deletePost(deletePost) {
-  console.log(deletePost);
   postitArray = postitArray.filter((item) => item.id !== deletePost.id);
+  localStorage.setItem("savedPosts", JSON.stringify(postitArray));
   renderPostIts(postitArray);
 }
 
@@ -253,8 +256,10 @@ postBtn.addEventListener("click", function (e) {
   };
 
   postitArray.push(newPostIt); // add newly created postIt object to postItArray
+  localStorage.setItem("savedPosts", JSON.stringify(postitArray));
   renderPostIts(postitArray); // pass postItArray to render Function
   postitFormVisibility(e);
+
   titleHandle.value = "";
   textAreaHandle.value = "";
   date.value = "";
@@ -262,4 +267,11 @@ postBtn.addEventListener("click", function (e) {
 
 newEntryBtn.addEventListener("click", function (e) {
   postitFormVisibility(e);
+});
+
+window.addEventListener("load", function () {
+  // load saved posts in local storage on page load
+  let savedPostsInLocStorageArray =
+    JSON.parse(localStorage.getItem("savedPosts")) || [];
+  renderPostIts(savedPostsInLocStorageArray);
 });
