@@ -21,6 +21,8 @@
 
 ### Any known issues or features not implemented.
 
+#### Bug - I have a bug in the application, after I close the browser, the application loads the saved posts from local stroage. But when I try to edit a post after returning to a page which was closed, update operation is not working. Something to do with local storage feature. Will come back to this [Pending]
+
 - I would like to implement these features if i had more time:
   a. search
   b. expand postIt
