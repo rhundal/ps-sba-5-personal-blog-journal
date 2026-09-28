@@ -27,16 +27,15 @@
 
 I was doing this instead of setting or updating the original array directly. I had to do some googling for looking at ideas. I used findIndex method on the array to find the index of the object based on the id I had available and I used it to update the original directly which fixed the bug. Now the update works both before and after the browser is closed and reloaded.
 
-````javascript
-       post.title = editedTitle.value;
-        post.content = editedContent.value;
-        if (editedDate.value) {
-          post.date = new Date(
-            editedDate.value + "T00:00:00",
-          ).toLocaleDateString();
-        }
-        ```
+```javascript
+post.title = editedTitle.value;
+post.content = editedContent.value;
+if (editedDate.value) {
+  post.date = new Date(editedDate.value + "T00:00:00").toLocaleDateString();
+}
+```
 
+### If I had more time.
 
 - I would like to implement these features if i had more time:
   a. search
@@ -82,4 +81,7 @@ Clicking “Delete” should remove the post from the display and from localStor
 - The form should be validated: both title and content are required.
 - Display custom, user-friendly error messages if validation fails.
 - Form validation should also apply during editing.
-````
+
+```
+
+```
