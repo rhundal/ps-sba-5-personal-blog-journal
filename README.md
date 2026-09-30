@@ -42,49 +42,10 @@ if (editedDate.value) {
 - I would like to implement these features if i had more time:
   a. search
   b. expand postIt
-  c. fix the validation properly, there is a glitch sometimes, it works and then it doesnt.. for both edit and post.
-
-## Assignment
-
-### Create New Posts: [Done]
-
-A form with fields for a post title and post content (e.g., using <input type="text"> for title and <textarea> for content).
-Upon submission, the new post should be added to a list of posts displayed on the page.
-The form should be validated: both title and content are required.
-Display custom, user-friendly error messages if validation fails.
-
-Pending - form validation
-
-### Display Posts: [Done]
-
-All created posts should be displayed on the page. Each displayed post should clearly show its title and content.
-Posts should be rendered dynamically using JavaScript.
-
-### Edit Posts: [Done]
-
-Each displayed post should have an “Edit” button.
-Clicking “Edit” should allow the user to modify the title and content of that specific post. This might involve populating the main form (or a modal form) with the existing post data.
-After editing, the updated post should be reflected in the display.
-Form validation should also apply during editing.
-
-### Delete Posts: [Done]
-
-Each displayed post should have a “Delete” button.
-Clicking “Delete” should remove the post from the display and from localStorage.
-
-### Data Persistence with localStorage: [Done]
-
-All blog posts (title, content, and perhaps a unique ID and timestamp you generate) must be saved in localStorage.
-When the page is loaded or refreshed, any posts previously saved in localStorage should be retrieved and displayed.
-Updates (from edits) and deletions must also be reflected in localStorage.
-Clicking “Delete” should remove the post from the display and from localStorage.
+  c. fix the validation properly, for date field.
 
 ### Field Validation For Above points [Works Partially - works for fields except date]
 
 - The form should be validated: both title and content are required.
 - Display custom, user-friendly error messages if validation fails.
 - Form validation should also apply during editing.
-
-```
-
-```
