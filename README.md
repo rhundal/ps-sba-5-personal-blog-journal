@@ -46,7 +46,7 @@ if (editedDate.value) {
 
 ## Assignment
 
-### Create New Posts:
+### Create New Posts: [Done]
 
 A form with fields for a post title and post content (e.g., using <input type="text"> for title and <textarea> for content).
 Upon submission, the new post should be added to a list of posts displayed on the page.
@@ -79,7 +79,7 @@ When the page is loaded or refreshed, any posts previously saved in localStorage
 Updates (from edits) and deletions must also be reflected in localStorage.
 Clicking “Delete” should remove the post from the display and from localStorage.
 
-### Field Validation For Above points [Works Partially]
+### Field Validation For Above points [Works Partially - works for fields except date]
 
 - The form should be validated: both title and content are required.
 - Display custom, user-friendly error messages if validation fails.
