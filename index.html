@@ -35,24 +35,26 @@
                     <div id="form-group" class="m-5 md:m-10">
                         <div class="bg-[#fadadd] border-1 border-[#e8d7d8]">
                             <label for=" title" class="text-lg font-semibold text-[#d4a4a5]"> Your Title: </label>
-                            <input type="text" id="title" name="title"
-                                class="border-2 border-[#d4a4a5] rounded-md ml-5">
+                            <input type="text" id="title" name="title" class="border-2 border-[#d4a4a5] rounded-md ml-5"
+                                minlength="1" required>
                             <span class="font-semibold mt-2" id="titleError"></span>
                         </div>
                         <div class="bg-[#fadadd] border-1 border-[#e8d7d8] md:mt-5">
                             <label for="contentArea" class="text-lg font-semibold text-[#d4a4a5]"> Write your
                                 article:
                             </label>
-                            <textarea id="contentArea" name="contentArea" rows="6"
+                            <textarea id="contentArea" name="contentArea" rows="6" minlength="1"
                                 placeholder="Write your article here..."
                                 class="border-2 border-[#d4a4a5] rounded-md ml-5 md:mt-5 w-70" required></textarea>
-                            <span class="font-semibold mt-2" id=" textAreaError"></span>
+                            <span class="font-semibold mt-2" id="textAreaError"></span>
                         </div>
                         <div class="bg-[#fadadd] border-1 border-[#e8d7d8] md:mt-3">
                             <label for="date" class="text-lg font-semibold text-[#d4a4a5]"> Date:
                             </label>
                             <input type="date" id="date" value="2026-09-30" min="2026-09-18" max="2027-12-31"
                                 class="border-3 border-[#d4a4a5] ml-5 rounded-lg" />
+                            <span class="font-semibold mt-2" id="datePostError"></span>
+
                         </div>
                         <div class=" mt-5 m-5">
                             <button id="post"

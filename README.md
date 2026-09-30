@@ -35,11 +35,14 @@ if (editedDate.value) {
 }
 ```
 
+-- while trying to implement validations on post popup and edit popup, i ended up breaking my entire application. I had to get some help from google response and also clean up and redo some parts of my project which didnt help. I then decided to revert back to the last version and started working from there, which got me much better results.Validation for title and textarea now works on both edit and post popups but the date field can be overlooked and the app still posts if you dont mention a date which is a bug! I need to fix this one. I did have to use google for some parts of the application.
+
 ### If I had more time.
 
 - I would like to implement these features if i had more time:
   a. search
   b. expand postIt
+  c. fix the validation properly, there is a glitch sometimes, it works and then it doesnt.. for both edit and post.
 
 ## Assignment
 
@@ -69,14 +72,14 @@ Form validation should also apply during editing.
 Each displayed post should have a “Delete” button.
 Clicking “Delete” should remove the post from the display and from localStorage.
 
-### Data Persistence with localStorage:
+### Data Persistence with localStorage: [Done]
 
 All blog posts (title, content, and perhaps a unique ID and timestamp you generate) must be saved in localStorage.
 When the page is loaded or refreshed, any posts previously saved in localStorage should be retrieved and displayed.
 Updates (from edits) and deletions must also be reflected in localStorage.
 Clicking “Delete” should remove the post from the display and from localStorage.
 
-### Field Validation For Above points
+### Field Validation For Above points [Works Partially]
 
 - The form should be validated: both title and content are required.
 - Display custom, user-friendly error messages if validation fails.

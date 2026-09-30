@@ -37,9 +37,11 @@ let postIt = {
 
 let postitArray = JSON.parse(localStorage.getItem("savedPosts")) || [];
 
+// from intial PostIt form
 let titleHandle = document.getElementById("title");
 let textAreaHandle = document.getElementById("contentArea");
 let dateField = document.getElementById("date");
+
 const postBtn = document.getElementById("post");
 let displayAreaFiled = document.getElementById("displayArea");
 let postItPopupDiv = document.getElementById("postItPopUp");
@@ -47,12 +49,31 @@ let postItForm = document.getElementById("postCreationForm");
 let postHereArea = document.getElementById("postHere");
 const newEntryBtn = document.getElementById("newEntry");
 
-const titleErrorHandle = document.getElementById("titleError");
-const textAreaErrorHandle = document.getElementById("textAreaError");
+// from edit PostIt form
+let editTitleField = document.getElementById("editTitle"); //  populated dynamically
+let editTextAField = document.getElementById("contentArea"); //  populated dynamically
+let editDateField = document.getElementById("editdate");
 
-// const postHereArea2 = displayAreaFiled
-//   .querySelector("#postItPopUp")
-//   .querySelector("#postHere");
+// error fields
+let titleErrorH = document.getElementById("titleError"); // coming from html
+let textAreaErrorH = document.getElementById("textAreaError"); // coming from html
+let editedTitleError = document.getElementById("editTitleEr"); // populated dynamically
+let editedContentAreaError = document.getElementById("editTxtEr"); // populated dynamically
+let editDateErr = document.getElementById("editDateEr"); // populated dynamically
+
+[titleHandle, textAreaHandle, dateField].forEach((field) => {
+  // from  initial postIt Form
+  field?.setCustomValidity("");
+  field?.removeAttribute("style");
+  field?.addEventListener("input", verifyField);
+});
+
+[editTitleField, editTextAField, editDateField].forEach((field) => {
+  // from edited postIt Form
+  field?.setCustomValidity("");
+  field?.removeAttribute("style");
+  field?.addEventListener("input", verifyField);
+});
 
 // functions ////
 function renderPostIts(postsArray) {
@@ -98,8 +119,6 @@ function renderPostIts(postsArray) {
         </div>
     `;
 
-    const editBtn = postItUI.querySelector("#editBtn");
-
     let editPopUpContainer = document.createElement("div");
     editPopUpContainer.classList.add(
       "fixed",
@@ -117,6 +136,7 @@ function renderPostIts(postsArray) {
     );
 
     let editPopUp = document.createElement("div");
+
     editPopUp.classList.add(
       "bg-transparent",
       "flex",
@@ -137,30 +157,31 @@ function renderPostIts(postsArray) {
 
     editPopUp.innerHTML = `
       
-          <div class="flex flex-col md:flex-row m-5 m-10" id="editPopUp">
-                <form id="editForm"
+          <div class="flex flex-col md:flex-row m-5 m-10" id="editPopUp-${post.id}">
+                <form id="editForm-${post.id}"
                     class="bg-transparent border-2 border-[#d4a4a5] rounded-xl shadow-xl h-80 scale-90 md:scale-100 md:w-100 md:h-100"
                     novalidate>
-                    <div id="form-group" class="m-5 md:m-10">
+                    <div id="form-group-${post.id}" class="m-5 md:m-10">
                         <div class="bg-[#fadadd] border-1 border-[#e8d7d8]">
-                            <label for="editTitle" class="text-lg font-semibold text-[#d4a4a5]"> Edit Title: </label>
-                            <input type="text" id="editTitle" name="editTitle"
-                                class="border-2 border-[#d4a4a5] rounded-md ml-5" value="${post.title}">
-                            <span class="font-semibold mt-2" id="titlevalError"></span>
+                            <label for="editTitle-${post.id}" class="text-lg font-semibold text-[#d4a4a5]"> Edit Title: </label>
+                            <input type="text" id="editTitle-${post.id}" name="editTitle"
+                              class="border-2 border-[#d4a4a5] rounded-md ml-5" value="${post.title}" required>
+                              <span class="font-semibold mt-2 text-red-500" id="editTitleEr-${post.id}"></span>
                         </div>
                         <div class="bg-[#fadadd] border-1 border-[#e8d7d8] md:mt-5">
-                            <label for="contentArea" class="text-lg font-semibold text-[#d4a4a5]"> Edit your
-                                article:
-                            </label>
-                            <textarea id="editcontentArea" name="editcontentArea" rows="6"
-                                class="border-2 border-[#d4a4a5] rounded-md ml-5 md:mt-5 w-70" required>${post.content}</textarea>
-                            <span class="font-semibold mt-2" id="edittextAreaError"></span>
+                          <label for="contentArea-${post.id}" class="text-lg font-semibold text-[#d4a4a5]"> Edit your article: </label>
+                          <textarea id="contentArea-${post.id}" name="contentArea" rows="6"
+                              class="edit-field border-2 border-[#d4a4a5] rounded-md ml-5 md:mt-5 w-70" required minlength="5">${post.content}</textarea>
+                          <span class="font-semibold mt-2 text-red-500" id="editTxtEr-${post.id}"></span>
                         </div>
                         <div class="bg-[#fadadd] border-1 border-[#e8d7d8] md:mt-3">
                             <label for="editdate" class="text-lg font-semibold text-[#d4a4a5]"> Date:
                             </label>
-                            <input type="date" id="editdate" min="2026-09-18" max="2027-12-31"
-                                class="border-3 border-[#d4a4a5] ml-5 rounded-lg" value="${new Date(post.date).toISOString().split("T")[0]}" />
+                            <input type="date" id="editdate" name="editdate"
+                                 class="border-3 border-[#d4a4a5] ml-5 rounded-lg" 
+                                 value="${formatToInputDate(post.date)}" />
+                            <span class="font-semibold mt-2" id="editDateEr"></span>
+
                         </div>
                         <div class=" mt-5 m-5">
                             <button id="editPostBtn"
@@ -173,7 +194,17 @@ function renderPostIts(postsArray) {
       
       `;
 
-    const editPstBtn = editPopUp.querySelector("#editPostBtn");
+    const currentEditTitle = editPopUp.querySelector(`#editTitle-${post.id}`);
+    const currentEditContent = editPopUp.querySelector(
+      `#contentArea-${post.id}`,
+    );
+
+    // Attach the validation listener dynamically
+    [currentEditTitle, currentEditContent].forEach((field) => {
+      field?.addEventListener("input", verifyField);
+    });
+
+    const editBtn = postItUI.querySelector("#editBtn");
 
     editBtn.addEventListener("click", function () {
       if (editPopUpContainer.classList.contains("hidden")) {
@@ -185,21 +216,62 @@ function renderPostIts(postsArray) {
       }
     });
 
-    let editedTitle = editPopUp.querySelector("#editTitle");
-    let editedContent = editPopUp.querySelector("#editcontentArea");
+    function formatToInputDate(dateString) {
+      if (!dateString) return "";
+
+      const date = new Date(dateString);
+      // Ensure the date object is valid before continuing
+      if (isNaN(date.getTime())) return "";
+
+      const year = date.getFullYear();
+      // padding single digits with a leading zero (e.g., '9' becomes '09')
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+
+      return `${year}-${month}-${day}`;
+    }
+
+    // let editedTitle = editPopUp.querySelector("#editTitle");
+    // let editedContent = editPopUp.querySelector("#editcontentArea");
     let editedDate = editPopUp.querySelector("#editdate");
+
+    const editPstBtn = editPopUp.querySelector("#editPostBtn");
+
+    editPopUp.dataset.currentPostId = post.id;
 
     editPstBtn.addEventListener("click", function (e) {
       e.preventDefault();
+
+      const editFormVar = editPopUp.querySelector(`#editForm-${post.id}`);
+
+      let editTitleField = editPopUp.querySelector(`#editTitle-${post.id}`);
+      let editTextAreaField = editPopUp.querySelector(
+        `#contentArea-${post.id}`,
+      );
+      let editDateField = editPopUp.querySelector("#editdate");
+
+      if (!editFormVar.checkValidity()) {
+        editTitleField.dispatchEvent(new Event("input"));
+        editTextAreaField.dispatchEvent(new Event("input"));
+        editDateField.dispatchEvent(new Event("input"));
+        console.log("Validation failed. Post-it not created.");
+        return;
+      }
       let postItId = post.id;
       let postItIndex = postitArray.findIndex((item) => item.id === postItId);
 
-      postitArray[postItIndex].title = editedTitle.value;
-      postitArray[postItIndex].content = editedContent.value;
-      if (editedDate.value) {
+      if (editTitleField.value) {
+        postitArray[postItIndex].title = editTitleField.value;
+      }
+      if (editTextAreaField.value) {
+        postitArray[postItIndex].content = editTextAreaField.value;
+      }
+      if (editDateField.value) {
         postitArray[postItIndex].date = new Date(
           editedDate.value + "T00:00:00",
         ).toLocaleDateString();
+      } else {
+        postitArray[postItIndex].date = "";
       }
 
       localStorage.setItem("savedPosts", JSON.stringify(postitArray));
@@ -242,10 +314,70 @@ function postitFormVisibility(e) {
   console.log("postItPopDiv Visibility " + postItPopupDiv.checkVisibility());
 }
 
+function verifyField(e) {
+  let inputField = e.target;
+  e.target.setCustomValidity("");
+
+  const dynamicErrorSpan =
+    inputField.id.startsWith("editTitle-") ||
+    inputField.id.startsWith("contentArea-")
+      ? inputField.nextElementSibling
+      : null;
+
+  if (!inputField.checkValidity()) {
+    inputField.classList.remove("valid");
+    inputField.classList.add("invalid");
+  }
+
+  const isTooShort = inputField.validity.tooShort;
+  const isMissing = inputField.validity.valueMissing;
+  const isValid = inputField.checkValidity();
+
+  if (isTooShort || isMissing || !isValid) {
+    inputField.classList.remove("valid");
+    inputField.classList.add("invalid");
+
+    // Force a friendly custom message if it hits your specific rules
+    if (isTooShort || isMissing) {
+      inputField.setCustomValidity("Field cannot be empty or too short.");
+    }
+
+    if (dynamicErrorSpan) {
+      dynamicErrorSpan.innerText = inputField.validationMessage;
+    }
+    // Map errors to the UI elements
+    if (inputField === titleHandle) {
+      titleErrorH.innerText = inputField.validationMessage;
+    } else if (inputField === textAreaHandle) {
+      textAreaErrorH.innerText = inputField.validationMessage;
+    }
+  } else {
+    // 4. Handle the VALID state flawlessly
+    inputField.classList.add("valid");
+    inputField.classList.remove("invalid");
+    inputField.setCustomValidity(""); // Explicitly tell the browser this field passes
+
+    if (dynamicErrorSpan) {
+      dynamicErrorSpan.innerText = "";
+    }
+    // Clean up all UI text strings
+    if (inputField === titleHandle) {
+      titleErrorH.innerText = "";
+    } else if (inputField === textAreaHandle) {
+      textAreaErrorH.innerText = "";
+    }
+  }
+}
 // Event Listeners /////
 
 postBtn.addEventListener("click", function (e) {
   e.preventDefault();
+
+  if (!postItForm.checkValidity(e)) {
+    titleHandle.dispatchEvent(new Event("input"));
+    textAreaHandle.dispatchEvent(new Event("input"));
+    return;
+  }
 
   // create a new postIt object based on user input
 

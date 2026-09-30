@@ -1,2 +1,22 @@
 /* Style the error messages to be noticeable (e.g., red text).
 */
+
+#postCreationForm input:invalid {
+
+    border: 2px solid red;
+}
+
+#postCreationForm input:valid {
+
+    border: 2px solid green;
+
+}
+
+#postCreationForm #titleError #textAreaError #titlevalError #editcontentArea {
+
+    display: block;
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+    min-height: 1em;
+}
