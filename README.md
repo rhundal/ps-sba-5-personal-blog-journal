@@ -43,6 +43,7 @@ if (editedDate.value) {
   a. search
   b. expand postIt
   c. fix the validation properly, for date field.
+  d. Right now you cannot see the textarea on mobile view, I would enable it next. Mobile view shows limited elements (date, title, edit and delete btns)
 
 ### Field Validation For Above points [Works Partially - works for fields except date]
 
